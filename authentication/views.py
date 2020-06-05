@@ -14,7 +14,8 @@ def signupview(request):
             data = form.cleaned_data
             user = MyUser.objects.create_user(
                 username=data['username'],
-                password=data['password'],
+                password1=data['password1'],
+                password2=data['password2'],
                 )
             user.save()
             login(request, user)
