@@ -123,4 +123,6 @@ USE_TZ = True
 
 STATIC_URL = '/static/'
 
-#AUTH_USER_MODEL = 'twitteruser.TwitterUser'
+LOGIN_URL = '/login/'
+
+AUTH_USER_MODEL = 'twitteruser.MyUser'
