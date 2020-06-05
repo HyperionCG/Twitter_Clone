@@ -2,25 +2,26 @@ from django.shortcuts import render, reverse, HttpResponseRedirect
 from django.contrib.auth import login, logout, authenticate
 from django.contrib.auth.decorators import login_required
 from django.contrib.auth.models import User
-from authentication.forms import LoginForm
+from twitteruser.models import MyUser
+from authentication.forms import LoginForm, SignUpForm
 
 # Create your views here.
 
 def signupview(request):
     if request.method == "POST":
-        form = LoginForm(request.POST)
+        form = SignUpForm(request.POST)
         if form.is_valid():
             data = form.cleaned_data
-            user = User.objects.create_user(
+            user = MyUser.objects.create_user(
                 username=data['username'],
-                password=data['password']
+                password=data['password'],
                 )
+            user.save()
             login(request, user)
-            return HttpResponseRedirect(
-                request.GET.get('next', reverse('homepage'))
-                )
-    form = LoginForm()
-    return render(request, 'generic_form.html', {'form':form})
+            return HttpResponseRedirect(reverse('homepage'))
+    
+    form = SignUpForm()
+    return render(request, 'generic_form.htm', {'form':form})
 
 
 def loginview(request):
@@ -38,7 +39,7 @@ def loginview(request):
                     request.GET.get('next', reverse('homepage'))
                 )
     form = LoginForm()
-    return render(request, 'generic_form.html', {'form':form})
+    return render(request, 'generic_form.htm', {'form':form})
 
 def logoutview(request):
     logout(request)

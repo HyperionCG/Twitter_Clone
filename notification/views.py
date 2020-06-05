@@ -5,4 +5,4 @@ from django.shortcuts import render
 def notifications_view(request):
     user_data=request.user
     
-    return render(request, 'index.html')
+    return render(request, 'index.htm')

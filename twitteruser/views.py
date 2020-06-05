@@ -9,7 +9,7 @@ from twitteruser.models import MyUser
 def index(request):
     userdata = MyUser.objects.all()
     tweetdata = Tweet.objects.all()
-    return render(request, 'index.html', {'userdata': userdata, 'tweetdata': tweetdata})
+    return render(request, 'index.htm', {'userdata': userdata, 'tweetdata': tweetdata})
 
 def user_profile_view(request, id):
     twitteruser = MyUser.objects.get(id=id)
@@ -18,13 +18,14 @@ def user_profile_view(request, id):
     followers =  twitteruser.following.all()
     followercount =  followers.count()
 
-    return render(request, 'userpage.html', {
+    return render(request, 'userpage.htm', {
         'twitteruser': twitteruser,
         'tweets': tweets,
         'tweetcount': tweetcount,
         'followers': followers,
         'followercount': followercount
         })
+
 def follow_view(request, id):
     user = request.user
     twitteruser = MyUser.objects.get(user=user)

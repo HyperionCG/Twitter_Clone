@@ -11,4 +11,4 @@ def index(request):
     user = request.user
     twitteruser = MyUser.objects.get(user=user)
     notifications = Notifications.objects.filter()
-    return render(request, 'index.html')
+    return render(request, 'index.htm')

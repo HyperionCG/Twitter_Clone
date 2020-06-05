@@ -1,0 +1,21 @@
+<h1>Welcome to My Twitter Clone</h1>
+<a href="/notifications/">Notifications{{}}</a>
+You are logged in as {{ request.user.username }}
+    <li>
+    Go to Profile<a href="/user/{{twitteruser.id}}/">{{user}}</a>
+    </li>
+    <br>
+    <ul>
+        Go to Followers
+        {% follower in data %}
+        <a href="/user/{{follower.id}}/">{{follower.user}}</a>
+        {% endfor %}
+    </ul>
+    Post Tweet<a href="/tweet/">Click Here</a> <br>
+</ul>
+
+
+
+
+
+To Logout <a href="logout/">Click Here</a>
