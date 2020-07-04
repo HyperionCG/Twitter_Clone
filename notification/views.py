@@ -11,5 +11,5 @@ def notifications_view(request, id):
     pingeduser = TwitterUser.objects.filter(id=id).first()
     data = Notifications.objects.filter(user=pingeduser)
     for notice in data:
-        item.delete()
+        notice.delete()
     return render(request, 'notifications.htm', {'data': data})
