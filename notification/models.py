@@ -9,10 +9,10 @@ class Notifications(models.Model):
       related_name='tweet_notifiation',
       on_delete=models.CASCADE
       )
-    twitter_user = models.ForeignKey(
+    pinged_user = models.ForeignKey(
       TwitterUser,
       related_name='user_notificatons',
       on_delete=models.CASCADE
       )
-    read = models.BooleanField(default=False)
+    received = models.BooleanField(default=False)
     
