@@ -26,7 +26,7 @@ def add_tweet(request):
             return HttpResponseRedirect(reverse('homepage'))
     
     form = TweetForm()
-    return render(request, 'tweet_page.htm' , {"form": form})    
+    return render(request, 'addtweet.htm' , {"form": form})    
 
 @login_required
 def tweet_view(request, id):

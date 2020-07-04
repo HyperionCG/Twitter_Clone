@@ -6,14 +6,15 @@ You are logged in as {{ request.user.username }}
 <h1></h1>
 <a href="/notifications/">Notifications</a>
 <a href="/profile/{{request.user.id}}">Profile</a>
-<ul>
 {% endif %}
-<ul>
-    See Users 
-</ul>
+    <ul>
+        {% for tweet in tweetdata %}
+        Tweets<a href="/tweet/{{tweet.id}}/">Click Here</a> <br>
+        {% endfor %}
     </ul>
-    Tweets<a href="/tweet/{tweetdata.id}">Click Here</a> <br>
-</ul>
+    <ul>
+        <a href="/add_tweet/"><button>Add Recipe</button></a>
+    </ul>
 
 
 
