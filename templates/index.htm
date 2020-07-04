@@ -1,21 +1,24 @@
 <h1>Welcome to My Twitter Clone</h1>
-<a href="/notifications/">Notifications{{}}</a>
+{% if request.user.is_authenticated %}
 You are logged in as {{ request.user.username }}
-    <li>
-    Go to Profile<a href="/user/{{twitteruser.id}}/">{{user}}</a>
-    </li>
-    <br>
-    <ul>
-        Go to Followers
-        {% follower in data %}
-        <a href="/user/{{follower.id}}/">{{follower.user}}</a>
-        {% endfor %}
+
+<br>
+<h1></h1>
+<a href="/notifications/">Notifications</a>
+<a href="/profile/{{request.user.id}}">Profile</a>
+<ul>
+{% endif %}
+<ul>
+    See Users 
+</ul>
     </ul>
-    Post Tweet<a href="/tweet/">Click Here</a> <br>
+    Tweets<a href="/tweet/{tweetdata.id}">Click Here</a> <br>
 </ul>
 
 
 
-
-
+{% if request.user.is_authenticated %}
 To Logout <a href="logout/">Click Here</a>
+{%else%}
+To Login <a href="login/">Click Here</a>
+{% endif %}

@@ -1,8 +1,22 @@
 <h1>Profile Page</h1>
-HomePage<a href="/homepage/">Home</a>
+HomePage<a href="/">Home</a>
 <br>
-{{twitteruser}}'s Profile
+{{user.username}}'s Profile
+<br>
+{% if user.id != request.user.id %}
+    {% if not is_following %}
+        <a href="/follow/{{user.id}}"><button>Follow</button></a>
+    {% else %}
+        <a href="/unfollow/{{user.id}}"><button>Unfollow</button></a>
+    {% endif %}
+{% endif %}
 <br>
 Followers: {{followercount}}
 <br>
 Tweets: {{tweetcount}}
+<br>
+{% for tweet in tweetdata %}
+    <li>
+    {{tweet.tweet}}
+    </li>
+{% endfor %}

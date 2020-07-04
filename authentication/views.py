@@ -1,8 +1,8 @@
 from django.shortcuts import render, reverse, HttpResponseRedirect
 from django.contrib.auth import login, logout, authenticate
 from django.contrib.auth.decorators import login_required
-from django.contrib.auth.models import User
-from twitteruser.models import MyUser
+from django.contrib.auth.models import User, AbstractUser
+from twitteruser.models import TwitterUser
 from authentication.forms import LoginForm, SignUpForm
 
 # Create your views here.
@@ -12,15 +12,12 @@ def signupview(request):
         form = SignUpForm(request.POST)
         if form.is_valid():
             data = form.cleaned_data
-            user = MyUser.objects.create_user(
+            user = TwitterUser.objects.create_user(
                 username=data['username'],
-                password1=data['password1'],
-                password2=data['password2'],
+                password=data['password'],
                 )
-            user.save()
-            login(request, user)
             return HttpResponseRedirect(reverse('homepage'))
-    
+
     form = SignUpForm()
     return render(request, 'generic_form.htm', {'form':form})
 
@@ -30,9 +27,10 @@ def loginview(request):
         form = LoginForm(request.POST)
         if form.is_valid():
             data = form.cleaned_data
-            user = authenticate(request,
-             username=data['username'],
-              password=data['password']
+            user = authenticate(
+                request,
+                username=data['username'],
+                password=data['password']
             )
             if user:
                 login(request, user)

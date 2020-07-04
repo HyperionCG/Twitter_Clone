@@ -1,24 +1,32 @@
 from django.shortcuts import render, reverse, HttpResponseRedirect
 from django.contrib.auth import login, logout, authenticate
 from django.contrib.auth.decorators import login_required
-from django.contrib.auth.models import User
-from twitteruser.models import MyUser
+from django.contrib.auth.models import User, AbstractUser
 
+from twitteruser.models import TwitterUser
+from tweet.models import Tweets
+from twitterclone import settings
 # Create your views here.
 
+@login_required
 def index(request):
-    userdata = MyUser.objects.all()
-    tweetdata = Tweet.objects.all()
-    return render(request, 'index.htm', {'userdata': userdata, 'tweetdata': tweetdata})
+    userdata = TwitterUser.objects.all()
+    tweetdata = Tweets.objects.all().order_by('-time')
+    return render(
+        request,
+        'index.htm',
+        {'userdata': userdata,
+        'tweetdata': tweetdata}
+        )
 
 def user_profile_view(request, id):
-    twitteruser = MyUser.objects.get(id=id)
-    tweets = Tweet.objects.filter(id=id)
+    twitteruser = TwitterUser.objects.get(id=id)
+    tweets = Tweets.objects.filter(id=id).order_by('-date')
     tweetcount = tweets.count()
-    followers =  twitteruser.following.all()
+    followers =  twitteruser.user.all()
     followercount =  followers.count()
 
-    return render(request, 'userpage.htm', {
+    return render(request, 'profilepage.htm', {
         'twitteruser': twitteruser,
         'tweets': tweets,
         'tweetcount': tweetcount,
@@ -28,10 +36,17 @@ def user_profile_view(request, id):
 
 def follow_view(request, id):
     user = request.user
-    twitteruser = MyUser.objects.get(user=user)
-    followuser = MyUser.objects.get(id=id)
-    user.following.add(followuser)
+    twitteruser = TwitterUser.objects.get(user=user)
+    followuser = TwitterUser.objects.get(id=id)
+    user.user.add(followuser)
     followuser.save()
-    return HttpResponseRedirect(reverse(''))
+    return HttpResponseRedirect(reverse('profile', args={id, }))
 
-#def unfollow_view(request, id):
+def unfollow_view(request, id):
+    user = request.user
+    twitteruser = TwitterUser.objects.get(user=user)
+    followuser = TwitterUser.objects.get(id=id)
+    user.user.add(followuser)
+    followuser.save()
+    return HttpResponseRedirect(reverse('profile', args={id, }))
+    
