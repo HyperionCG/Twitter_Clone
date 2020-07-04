@@ -1,9 +1,7 @@
 <h3>Notifications</h3>
 
-{% for instances in notifications %}
+{% for notice in data %}
 <p>
-    {{instances.tweet}}
-    <a href="/user/{{instances.tweet.user.id}}/">{{instances.tweet.user}}</a>
-    <a href="/user/{{instances.tweet.user.id}}/">{{instances}}</a>
+    {{notice}}
 </p>
 {% endfor %}
