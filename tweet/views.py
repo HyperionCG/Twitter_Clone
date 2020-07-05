@@ -17,7 +17,7 @@ def add_tweet(request):
                 text=data['text'],
                 author=request.user,  
             )
-            all_users = re.look(r'@(\w+)', data['text'])
+            all_users = re.findall(r'@(\w+)', data['text'])
             for pinged in all_users:
                  Notifications.objects.create(
                     pinged_user = TwitterUser.objects.get(username=pinged),
